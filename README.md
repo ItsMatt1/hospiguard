@@ -5,6 +5,11 @@ Nome do Projeto: HospiGuard - Sistema Ubíquo de Monitoramento Hospitalar
 Descrição:
 O HospiGuard é um projeto que visa aprimorar a segurança e o atendimento a pacientes em ambientes hospitalares por meio de um sistema ubíquo de monitoramento. Utilizando uma variedade de sensores e dispositivos inteligentes, o HospiGuard oferece uma solução completa para monitorar quartos de hospitais, garantindo o bem-estar dos pacientes, melhorando a eficiência do atendimento e proporcionando paz de espírito tanto para pacientes quanto para profissionais de saúde.
 
+Digital Twin dos Quartos de Hospital:
+Crie uma réplica digital de cada quarto de hospital monitorado pelo sistema HospiGuard. Isso permitirá uma visualização em tempo real do estado de cada quarto, com informações detalhadas sobre temperatura, umidade, presença de pacientes, níveis de gases, entre outros.
+Digital Twin dos Sensores:
+Desenvolva uma representação digital dos sensores utilizados no sistema. Isso pode facilitar a monitorização contínua do desempenho dos sensores, identificando eventuais falhas ou calibrações necessárias.
+
 Recursos Destacados:
 
     Detecção de Movimento: Sensores de movimento identificam a presença de pessoas no quarto, permitindo uma resposta rápida às necessidades dos pacientes.
