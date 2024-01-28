@@ -1,6 +1,7 @@
 package com.example.hospiguard
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -39,13 +40,13 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = Color.Black
                     ) {
-                        HospiguardApp(onExit = { finish() }, temperatureSensorList)
+                        HospiguardApp(onExit = { finish() }, temperatureSensorList) {
+                            startActivity(Intent(this@MainActivity, TemperatureSensor::class.java))
+                        }
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             Log.d("MainActivity2", "Ambient temperature sensor is not available on this device.")
             finish()
         }
@@ -75,21 +76,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun HospiguardApp(onExit: () -> Unit, temperatureSensorList: List<TemperatureSensor>) {
+fun HospiguardApp(onExit: () -> Unit, temperatureSensorList: List<TemperatureSensor>, onTemperatureButtonClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top, // Updated to place the logo at the top
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HospiguardLogo()
         Spacer(modifier = Modifier.height(16.dp))
         TemperatureSensorList(sensorList = temperatureSensorList)
         Spacer(modifier = Modifier.height(16.dp))
-        HospiguardMenu(onExit = onExit)
+        HospiguardMenu(onExit = onExit, onTemperatureButtonClick = onTemperatureButtonClick)
     }
 }
+
 
 @Composable
 fun HospiguardLogo() {
@@ -97,13 +99,13 @@ fun HospiguardLogo() {
         painter = painterResource(id = R.drawable.hospiguardlogo),
         contentDescription = null,
         modifier = Modifier
-            .size(120.dp)
+            .size(300.dp)
             .clip(shape = MaterialTheme.shapes.medium)
     )
 }
 
 @Composable
-fun HospiguardMenu(onExit: () -> Unit) {
+fun HospiguardMenu(onExit: () -> Unit, onTemperatureButtonClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -120,6 +122,15 @@ fun HospiguardMenu(onExit: () -> Unit) {
             onExit.invoke()
         }) {
             Text(text = "Exit")
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Button(onClick = {
+            // Handle temperature button click
+            onTemperatureButtonClick.invoke()
+        }) {
+            Text(text = "Temperature")
         }
     }
 }
