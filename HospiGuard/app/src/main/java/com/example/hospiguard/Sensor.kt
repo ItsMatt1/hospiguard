@@ -2,7 +2,7 @@ package com.example.hospiguard
 
 import androidx.compose.runtime.Composable
 
-data class Sensor(
+open class Sensor(
     val sensorType: String,
     val status: String,
     // Add more properties as needed

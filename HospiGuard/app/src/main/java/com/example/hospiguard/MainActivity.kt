@@ -1,6 +1,12 @@
 package com.example.hospiguard
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -14,26 +20,62 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.hospiguard.ui.theme.HospiGuardTheme
-import com.example.hospiguard.HospitalRoom
 
 class MainActivity : ComponentActivity() {
+    private lateinit var sensorManager: SensorManager
+    private lateinit var temperatureSensor: Sensor
+    private val temperatureSensorList = mutableListOf<TemperatureSensor>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            HospiGuardTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.Black
-                ) {
-                    HospiguardApp(onExit = { finish() })
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)!!
+
+        if (temperatureSensor != null) {
+            setContent {
+                HospiGuardTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = Color.Black
+                    ) {
+                        HospiguardApp(onExit = { finish() }, temperatureSensorList)
+                    }
                 }
+            }
+        }
+        else
+        {
+            Log.d("MainActivity2", "Ambient temperature sensor is not available on this device.")
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(temperatureListener, temperatureSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(temperatureListener)
+    }
+
+    private val temperatureListener = object : SensorEventListener {
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
+        override fun onSensorChanged(event: SensorEvent) {
+            if (event.sensor.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+                val temperature = event.values[0]
+                temperatureSensorList.clear()
+                temperatureSensorList.add(TemperatureSensor(temperature))
             }
         }
     }
 }
 
 @Composable
-fun HospiguardApp(onExit: () -> Unit) {
+fun HospiguardApp(onExit: () -> Unit, temperatureSensorList: List<TemperatureSensor>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +84,8 @@ fun HospiguardApp(onExit: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         HospiguardLogo()
+        Spacer(modifier = Modifier.height(16.dp))
+        TemperatureSensorList(sensorList = temperatureSensorList)
         Spacer(modifier = Modifier.height(16.dp))
         HospiguardMenu(onExit = onExit)
     }
