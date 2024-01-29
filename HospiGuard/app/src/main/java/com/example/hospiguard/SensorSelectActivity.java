@@ -1,13 +1,14 @@
 package com.example.hospiguard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
+import java.util.ArrayList;
 
 public class SensorSelectActivity extends AppCompatActivity {
 
@@ -21,36 +22,32 @@ public class SensorSelectActivity extends AppCompatActivity {
         Button temperatureButton = findViewById(R.id.temperatureButton);
         Button heartRateButton = findViewById(R.id.heartRateButton);
 
+        // Set click listeners for each button
         luminosityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace the current fragment with the LightSensorFragment
-                replaceFragment(new LightSensorFragment());
+                // Launch LuminositySensorActivity
+                Intent intent = new Intent(SensorSelectActivity.this, LightSensorActivity.class);
+                startActivity(intent);
             }
         });
 
         temperatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace the current fragment with the TemperatureSensorFragment
-                replaceFragment(new TemperatureSensorFragment());
+                // Launch TemperatureSensorActivity
+                Intent intent = new Intent(SensorSelectActivity.this, TemperatureSensorActivity.class);
+                startActivity(intent);
             }
         });
 
         heartRateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace the current fragment with the HeartRateSensorFragment
-                replaceFragment(new HeartRateSensorFragment());
+                // Launch HeartRateSensorActivity
+                Intent intent = new Intent(SensorSelectActivity.this, HeartRateSensorActivity.class);
+                startActivity(intent);
             }
         });
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment); // R.id.fragmentContainer should be the ID of the container in your layout
-        fragmentTransaction.addToBackStack(null); // Optional: Add to back stack if you want to navigate back
-        fragmentTransaction.commit();
     }
 }

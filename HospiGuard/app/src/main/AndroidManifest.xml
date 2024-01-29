@@ -21,6 +21,12 @@
             android:name=".SensorSelectActivity"
             android:exported="false" />
         <activity
+            android:name=".LightSensorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TemperatureSensorActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
