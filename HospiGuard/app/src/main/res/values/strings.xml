@@ -10,4 +10,14 @@
     <string name="entrar">Entrar</string>
     <string name="senha">Senha</string>
     <string name="usuario">Usuário</string>
+    <string name="salvar">Salvar</string>
+    <string name="my_msg">teste</string>
+    <string name="patologias_do_paciente">Características do paciente</string>
+    <string name="fotofobia">Fotofobia</string>
+    <string name="aterosclerose">Aterosclerose</string>
+    <string name="linfoma_de_hodgkin">Linfoma de Hodgkin</string>
+    <string name="coma">Coma</string>
+    <string name="estado_de_sa_de_grave">Estado de saúde grave</string>
+    <string name="idade_avan_ada">Idade avançada</string>
+    <string name="insufici_ncia_card_aca">Insuficiência cardíaca</string>
 </resources>

@@ -46,6 +46,7 @@
             android:background="@drawable/bg_edittext_normal"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
+            android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf = "@+id/edit_text_password" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -62,6 +63,7 @@
             android:background="@drawable/bg_edittext_normal"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf = "@+id/btn_sign_in" />
 
         <androidx.appcompat.widget.AppCompatButton
