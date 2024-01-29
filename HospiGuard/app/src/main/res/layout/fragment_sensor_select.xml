@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:contentDescription="@string/my_msg"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background2" />
+
+    <RelativeLayout
+        android:id="@+id/today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <TextView
+            android:id="@+id/sensorselectid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Escolha um Sensor"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="16dp" />
+
+        <!-- Button for Luminosity Sensor -->
+        <Button
+            android:id="@+id/luminosityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Luminosity Sensor"
+            android:layout_below="@id/sensorselectid"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="onLuminosityButtonClick" />
+
+        <!-- Button for Temperature Sensor -->
+        <Button
+            android:id="@+id/temperatureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperature Sensor"
+            android:layout_below="@id/luminosityButton"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="onTemperatureButtonClick" />
+
+        <!-- Button for Heart Rate Sensor -->
+        <Button
+            android:id="@+id/heartRateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heart Rate Sensor"
+            android:layout_below="@id/temperatureButton"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:onClick="onHeartRateButtonClick" />
+
+    </RelativeLayout>
+
+    <!-- FrameLayout as a container for fragments -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/today"
+        android:layout_marginTop="16dp"/>
+</FrameLayout>

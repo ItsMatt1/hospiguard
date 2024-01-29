@@ -42,8 +42,8 @@ public class PatologyCheckboxActivity extends AppCompatActivity {
                         patology.add(checkbox.getText().toString());
                     }
                 }
-//            Intent telaSensores = new Intent( PatologyCheckboxActivity.this, teste.class); *Matt* substitua "teste" pela sua tela com os sensores
-//            startActivity(telaSensores);
+            Intent telaSensores = new Intent( PatologyCheckboxActivity.this, SensorSelectActivity.class);
+            startActivity(telaSensores);
             }
         });
     }

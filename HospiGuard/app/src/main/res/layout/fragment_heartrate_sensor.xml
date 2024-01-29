@@ -9,11 +9,11 @@
     tools:context=".LightSensorFragment">
 
     <TextView
-        android:id="@+id/lightValueTextView"
+        android:id="@+id/heartRateValueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="Luminosidade Lux: 0"
+        android:text="Batimento Cardíaco: 0"
         android:textColor="@android:color/white" />
 
 </LinearLayout>
