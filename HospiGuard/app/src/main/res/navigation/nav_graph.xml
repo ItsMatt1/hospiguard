@@ -15,6 +15,7 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.hospiguard.SecondFragment"
@@ -25,4 +26,12 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+    <!-- New LightSensorFragment -->
+    <fragment
+        android:id="@+id/LightSensorFragment"
+        android:name="com.example.hospiguard.LightSensorFragment"
+        android:label="Light Sensor"
+        tools:layout="@layout/fragment_light_sensor" />
+
 </navigation>
