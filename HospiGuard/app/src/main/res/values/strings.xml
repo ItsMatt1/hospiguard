@@ -20,4 +20,10 @@
     <string name="estado_de_sa_de_grave">Estado de saúde grave</string>
     <string name="idade_avan_ada">Idade avançada</string>
     <string name="insufici_ncia_card_aca">Insuficiência cardíaca</string>
+    <string-array name="escolha_pacientes">
+        <item>Marcos da Silva Santos</item>
+        <item>Maria Luiza Aparecida</item>
+        <item>João Cabral de Melo</item>
+    </string-array>
+    <string name="selecionar_paciente">Selecionar paciente</string>
 </resources>
