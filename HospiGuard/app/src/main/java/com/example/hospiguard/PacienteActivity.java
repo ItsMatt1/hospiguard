@@ -3,6 +3,7 @@ package com.example.hospiguard;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,17 @@ public class PacienteActivity extends AppCompatActivity implements SingleChoiseD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paciente);
 
+        Button luminosityButton = findViewById(R.id.luminosityButton);
+
+        luminosityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch LuminositySensorActivity
+                Intent intent = new Intent(PacienteActivity.this, DoctorLightSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
         tvDisplayChoise = findViewById(R.id.dados_paciente);
 
         Button btnSelectChoice = findViewById(R.id.select_paciente);
@@ -27,6 +39,8 @@ public class PacienteActivity extends AppCompatActivity implements SingleChoiseD
                 singleChoiceDialog.show(getSupportFragmentManager(), "Single Choise Dialog");
             }
         });
+
+
 
     }
 

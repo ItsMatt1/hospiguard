@@ -45,29 +45,20 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.edit_text_password);
         login = findViewById(R.id.btn_sign_in);
 
-        Mqtt5BlockingClient client = Mqtt5Client.builder()
-                .identifier(UUID.randomUUID().toString())
-                .serverHost("ec2-34-194-22-234.compute-1.amazonaws.com")
-                .buildBlocking();
-
-        client.connect();
-
-        // Use a callback lambda function to show the message on the screen
-        client.toAsync().subscribeWith()
-                .topicFilter("doctorLightSensor")
-                .qos(MqttQos.AT_LEAST_ONCE)
-                .callback(msg -> {
-                    Log.d("testeee", msg.toString());
-                })
-                .send();
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(user.getText().toString().equals("adm") && password.getText().toString().equals("adm")) {
+                if(user.getText().toString().equals("adm") && password.getText().toString().equals("adm"))
+                {
+                    Intent telaPatologias = new Intent( MainActivity.this, PacienteActivity.class);
+                    startActivity(telaPatologias);
+                }
+                else if(user.getText().toString().equals("user") && password.getText().toString().equals("user"))
+                {
                     Intent telaPatologias = new Intent( MainActivity.this, PatologyCheckboxActivity.class);
                     startActivity(telaPatologias);
-                } else {
+                }
+                else {
                     showPasswordErrorDialog();
                 }
             }

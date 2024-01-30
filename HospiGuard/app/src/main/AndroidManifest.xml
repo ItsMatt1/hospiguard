@@ -19,6 +19,9 @@
             android:name=".PatologyCheckboxActivity"
             android:exported="false" />
         <activity
+            android:name=".PacienteActivity"
+            android:exported="false" />
+        <activity
             android:name=".SensorSelectActivity"
             android:exported="false" />
         <activity
@@ -26,6 +29,12 @@
             android:exported="false" />
         <activity
             android:name=".TemperatureSensorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HeartRateSensorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorLightSensorActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
