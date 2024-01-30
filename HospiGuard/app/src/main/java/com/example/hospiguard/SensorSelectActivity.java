@@ -65,5 +65,14 @@ public class SensorSelectActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        accelerationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch HeartRateSensorActivity
+                Intent intent = new Intent(SensorSelectActivity.this, AccelerationSensorActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

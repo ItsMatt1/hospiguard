@@ -20,6 +20,8 @@ public class PacienteActivity extends AppCompatActivity implements SingleChoiseD
         Button luminosityButton = findViewById(R.id.luminosityButton);
         Button temperatureButton = findViewById(R.id.temperatureButton);
         Button heartRateButton = findViewById(R.id.heartRateButton);
+        Button accelerationButton = findViewById(R.id.accelerationButton);
+        Button twinButton = findViewById(R.id.twinButton);
 
         luminosityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +46,24 @@ public class PacienteActivity extends AppCompatActivity implements SingleChoiseD
             public void onClick(View v) {
                 // Launch HeartRateSensorActivity
                 Intent intent = new Intent(PacienteActivity.this, HeartRateSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        accelerationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch HeartRateSensorActivity
+                Intent intent = new Intent(PacienteActivity.this, AccelerationSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        twinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PacienteActivity.this, DigitalTwinActivity.class);
                 startActivity(intent);
             }
         });

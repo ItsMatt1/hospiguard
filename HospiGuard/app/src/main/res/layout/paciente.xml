@@ -49,7 +49,7 @@
             android:id="@+id/luminosityButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Luminosity Sensor"
+            android:text="@string/sensor_luminosidade"
             android:layout_below="@id/dados_paciente"
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
@@ -60,7 +60,7 @@
             android:id="@+id/temperatureButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Temperature Sensor"
+            android:text="@string/sensor_temperatura"
             android:layout_below="@id/luminosityButton"
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
@@ -71,11 +71,33 @@
             android:id="@+id/heartRateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heart Rate Sensor"
+            android:text="@string/sensor_batimento_card_aco"
             android:layout_below="@id/temperatureButton"
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
             android:onClick="onHeartRateButtonClick" />
+
+        <Button
+            android:id="@+id/accelerationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temperatureButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="112dp"
+            android:onClick="onAccelerationButtonClick"
+            android:text="@string/sensor_movimenta_o" />
+
+        <Button
+            android:id="@+id/twinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/accelerationButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="112dp"
+            android:onClick="onTwinButtonClick"
+            android:text="Quarto" />
 
     </RelativeLayout>
 

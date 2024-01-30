@@ -26,4 +26,8 @@
         <item>João Cabral de Melo</item>
     </string-array>
     <string name="selecionar_paciente">Selecionar paciente</string>
+    <string name="sensor_luminosidade">Sensor Luminosidade</string>
+    <string name="sensor_temperatura">Sensor Temperatura</string>
+    <string name="sensor_batimento_card_aco">Sensor batimento cardíaco</string>
+    <string name="sensor_movimenta_o">Sensor movimentação</string>
 </resources>

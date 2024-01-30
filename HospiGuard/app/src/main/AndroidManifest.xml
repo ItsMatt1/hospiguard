@@ -45,6 +45,10 @@
         <activity
             android:name=".DoctorTemperatureSensorActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".DigitalTwinActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
