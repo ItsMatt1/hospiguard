@@ -18,12 +18,32 @@ public class PacienteActivity extends AppCompatActivity implements SingleChoiseD
         setContentView(R.layout.paciente);
 
         Button luminosityButton = findViewById(R.id.luminosityButton);
+        Button temperatureButton = findViewById(R.id.temperatureButton);
+        Button heartRateButton = findViewById(R.id.heartRateButton);
 
         luminosityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Launch LuminositySensorActivity
                 Intent intent = new Intent(PacienteActivity.this, DoctorLightSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        temperatureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch TemperatureSensorActivity
+                Intent intent = new Intent(PacienteActivity.this, TemperatureSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        heartRateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch HeartRateSensorActivity
+                Intent intent = new Intent(PacienteActivity.this, HeartRateSensorActivity.class);
                 startActivity(intent);
             }
         });
@@ -39,7 +59,6 @@ public class PacienteActivity extends AppCompatActivity implements SingleChoiseD
                 singleChoiceDialog.show(getSupportFragmentManager(), "Single Choise Dialog");
             }
         });
-
 
 
     }

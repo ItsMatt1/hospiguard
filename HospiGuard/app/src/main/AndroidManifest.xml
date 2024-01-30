@@ -37,6 +37,12 @@
             android:name=".DoctorLightSensorActivity"
             android:exported="false" />
         <activity
+            android:name=".DoctorHeartRateSensorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorTemperatureSensorActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

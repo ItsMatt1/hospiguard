@@ -1,40 +1,19 @@
 package com.example.hospiguard;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 
-import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.UUID;
 
-public class DoctorLightSensorActivity extends AppCompatActivity {
+public class DoctorTemperatureSensorActivity extends AppCompatActivity {
     private TextView lightValueTextView;
     private float[] lightLuxArray;
     private int arrayIndex = 0;
@@ -76,7 +55,6 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
                             try {
                                 // Parse the payload as a float
                                 float newLightValue = Float.parseFloat(new String(msg.getPayloadAsBytes()));
-                                Log.d("valordluz", String.valueOf(newLightValue));
                                 runOnUiThread(() -> updateLightValue(newLightValue));
                             } catch (NumberFormatException e) {
                                 // Handle parsing errors, e.g., log the error or display a message
@@ -89,7 +67,6 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
             }
         }).start();
     }
-
     private void updateLightValue(float newLightValue) {
         lightValue = newLightValue;
         lightValueTextView.setText("Light Lux: " + lightValue);
