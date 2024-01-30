@@ -39,8 +39,8 @@ public class AccelerationSensorActivity extends AppCompatActivity implements Sen
 
     private LinearLayout valueContainer;
 
-    private static final float UPPER_THRESHOLD = 15; // Set your upper threshold for acceleration
-    private static final float LOWER_THRESHOLD = 5;  // Set your lower threshold for acceleration
+    private static final float UPPER_THRESHOLD = 3; // Set your upper threshold for acceleration
+    private static final float LOWER_THRESHOLD = 1;  // Set your lower threshold for acceleration
 
     private static final String CHANNEL_ID = "acceleration_sensor_channel";
     private static final int NOTIFICATION_ID_HIGH = 1;

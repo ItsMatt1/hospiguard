@@ -47,6 +47,8 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
 
     private LinearLayout valueContainer;
 
+    private LightSensorDigitalTwin digitalTwin;
+
     public static final String EXTRA_MESSAGE = "com.example.basicandroidmqttclient.MESSAGE";
     public static final String brokerURI = "34.194.22.234";
 
@@ -75,6 +77,12 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         }
 
         valueContainer = findViewById(R.id.valueContainer);
+
+        // Create a digital twin instance
+        digitalTwin = new LightSensorDigitalTwin("sensor1");
+
+        // Connect to the physical sensor
+        digitalTwin.connect();
 
         // Retrieve the passed data
         Intent intent = getIntent();
@@ -173,6 +181,8 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         lightValue = event.values[0];
         lightValueTextView.setText("Light Lux: " + lightValue);
         checkThresholds(lightValue);
+
+        digitalTwin.updateLuxValue(lightValue);
     }
 
     private void checkThresholds(float luxValue)
