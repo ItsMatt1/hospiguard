@@ -21,6 +21,7 @@ public class SensorSelectActivity extends AppCompatActivity {
         Button luminosityButton = findViewById(R.id.luminosityButton);
         Button temperatureButton = findViewById(R.id.temperatureButton);
         Button heartRateButton = findViewById(R.id.heartRateButton);
+        Button accelerationButton = findViewById(R.id.accelerationButton);
 
         // Retrieve the passed data
         Intent intent = getIntent();
@@ -52,6 +53,15 @@ public class SensorSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Launch HeartRateSensorActivity
                 Intent intent = new Intent(SensorSelectActivity.this, HeartRateSensorActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        accelerationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch HeartRateSensorActivity
+                Intent intent = new Intent(SensorSelectActivity.this, AccelerationSensorActivity.class);
                 startActivity(intent);
             }
         });

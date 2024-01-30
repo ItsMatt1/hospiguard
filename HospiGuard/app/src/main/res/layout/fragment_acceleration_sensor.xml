@@ -1,0 +1,27 @@
+<!-- res/layout/fragment_light_sensor.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/accelerationValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Aceleracao: 0"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/valueContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp">
+        <!-- Dynamic TextViews for lux values will be added here programmatically -->
+    </LinearLayout>
+
+</LinearLayout>

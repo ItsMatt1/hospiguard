@@ -18,9 +18,9 @@
     <RelativeLayout
         android:id="@+id/today"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="302dp"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:paddingRight="5dp">
 
         <TextView
             android:id="@+id/sensorselectid"
@@ -28,43 +28,54 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             android:text="Escolha um Sensor"
-            android:textStyle="bold"
             android:textSize="24sp"
-            android:layout_marginTop="16dp" />
+            android:textStyle="bold" />
 
         <!-- Button for Luminosity Sensor -->
         <Button
             android:id="@+id/luminosityButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Luminosity Sensor"
             android:layout_below="@id/sensorselectid"
-            android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
-            android:onClick="onLuminosityButtonClick" />
+            android:layout_marginTop="16dp"
+            android:onClick="onLuminosityButtonClick"
+            android:text="Luminosity Sensor" />
 
         <!-- Button for Temperature Sensor -->
         <Button
             android:id="@+id/temperatureButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Temperature Sensor"
             android:layout_below="@id/luminosityButton"
-            android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
-            android:onClick="onTemperatureButtonClick" />
+            android:layout_marginTop="16dp"
+            android:onClick="onTemperatureButtonClick"
+            android:text="Temperature Sensor" />
 
         <!-- Button for Heart Rate Sensor -->
         <Button
             android:id="@+id/heartRateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heart Rate Sensor"
             android:layout_below="@id/temperatureButton"
-            android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true"
-            android:onClick="onHeartRateButtonClick" />
+            android:layout_marginTop="16dp"
+            android:onClick="onHeartRateButtonClick"
+            android:text="Heart Rate Sensor" />
+
+        <Button
+            android:id="@+id/accelerationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temperatureButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="112dp"
+            android:onClick="onAccelerationButtonClick"
+            android:text="Acceleration Sensor" />
 
     </RelativeLayout>
 
