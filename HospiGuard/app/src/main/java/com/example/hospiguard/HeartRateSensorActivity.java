@@ -8,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class HeartRateSensorActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -30,6 +37,8 @@ public class HeartRateSensorActivity extends AppCompatActivity implements Sensor
     private float[] heartRateArray;
     private int arrayIndex = 0;
     float heartRateValue = 0;
+
+    private LinearLayout valueContainer;
 
     private static final float UPPER_THRESHOLD = 60;
     private static final float LOWER_THRESHOLD = 5;
@@ -51,6 +60,8 @@ public class HeartRateSensorActivity extends AppCompatActivity implements Sensor
             return;
         }
 
+        valueContainer = findViewById(R.id.valueContainer);
+
         createNotificationChannel();
         initializeViews();
     }
@@ -66,6 +77,9 @@ public class HeartRateSensorActivity extends AppCompatActivity implements Sensor
                     heartRateArray[arrayIndex++] = getCurrentHeartRate();
                     Log.d("deu??", "" + getCurrentHeartRate());
                     checkThresholds(heartRateValue);
+
+                    // Display the value in a box on the UI
+                    displayValue(heartRateValue);
                 }
             }
 
@@ -73,6 +87,23 @@ public class HeartRateSensorActivity extends AppCompatActivity implements Sensor
             public void onFinish() {
             }
         }.start();
+    }
+
+    private void displayValue(float luxValue) {
+        TextView valueTextView = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        valueTextView.setLayoutParams(params);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String currentTime = sdf.format(new Date());
+
+        valueTextView.setText(String.format(Locale.getDefault(), "Batimento cardiáco: %s: %.2f", currentTime, luxValue));
+
+        valueContainer.addView(valueTextView);
     }
 
     @Override

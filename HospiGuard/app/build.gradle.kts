@@ -32,9 +32,17 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packagingOptions {
+        resources {
+            exclude("META-INF/INDEX.LIST")
+            exclude("META-INF/io.netty.versions.properties")
+        }
+    }
 }
 
 dependencies {
+    implementation("com.hivemq:hivemq-mqtt-client:1.3.3")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

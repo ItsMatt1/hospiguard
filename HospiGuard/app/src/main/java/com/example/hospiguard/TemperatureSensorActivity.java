@@ -8,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class TemperatureSensorActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -33,6 +40,8 @@ public class TemperatureSensorActivity extends AppCompatActivity implements Sens
     float temperatureValue = 0;
     private static final float UPPER_THRESHOLD = 60;
     private static final float LOWER_THRESHOLD = 5;
+
+    private LinearLayout valueContainer;
 
     private static final String CHANNEL_ID = "temperature_sensor_channel";
     private static final int NOTIFICATION_ID_HIGH = 1;
@@ -52,6 +61,8 @@ public class TemperatureSensorActivity extends AppCompatActivity implements Sens
             return;
         }
 
+        valueContainer = findViewById(R.id.valueContainer);
+
         createNotificationChannel();
         initializeViews();
     }
@@ -67,6 +78,9 @@ public class TemperatureSensorActivity extends AppCompatActivity implements Sens
                     temperatureArray[arrayIndex++] = getCurrentTemperature();
                     Log.d("deu??", "" + getCurrentTemperature());
                     checkThresholds(temperatureValue);
+
+                    // Display the value in a box on the UI
+                    displayValue(temperatureValue);
                 }
             }
 
@@ -74,6 +88,23 @@ public class TemperatureSensorActivity extends AppCompatActivity implements Sens
             public void onFinish() {
             }
         }.start();
+    }
+
+    private void displayValue(float luxValue) {
+        TextView valueTextView = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        valueTextView.setLayoutParams(params);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String currentTime = sdf.format(new Date());
+
+        valueTextView.setText(String.format(Locale.getDefault(), "Temperatura: %s: %.2f °C", currentTime, luxValue));
+
+        valueContainer.addView(valueTextView);
     }
 
     @Override

@@ -8,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +20,20 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.hivemq.client.mqtt.datatypes.MqttQos;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+
+import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 public class LightSensorActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -29,6 +42,11 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
     private TextView lightValueTextView;
     private float[] lightLuxArray;
     private int arrayIndex = 0;
+
+    private LinearLayout valueContainer;
+
+    public static final String EXTRA_MESSAGE = "com.example.basicandroidmqttclient.MESSAGE";
+    public static final String brokerURI = "ec2-34-194-22-234.compute-1.amazonaws.com";
 
     float lightValue = 0;
     private static final float UPPER_THRESHOLD = 60;
@@ -41,6 +59,8 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
     private static final int PERMISSION_REQUEST_NOTIFICATION = 123; // Choose any unique value
     private static final int NOTIFICATION_ID = 456; // Choose any unique value
 
+    String topicName = "lightSensor";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +71,8 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         if (lightSensor == null) {
             return;
         }
+
+        valueContainer = findViewById(R.id.valueContainer);
 
         createNotificationChannel();
         initializeViews();
@@ -67,6 +89,24 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
                     lightLuxArray[arrayIndex++] = getCurrentLightLux();
                     Log.d("deu??", "" + getCurrentLightLux());
                     checkThresholds(lightValue);
+
+                    // Display the value in a box on the UI
+                    displayValue(lightValue);
+
+                    byte[] payloadBytes = ByteBuffer.allocate(4).putFloat(lightValue).array();
+
+                    Mqtt5BlockingClient client = Mqtt5Client.builder()
+                            .identifier(UUID.randomUUID().toString())
+                            .serverHost(brokerURI)
+                            .buildBlocking();
+
+                    client.connect();
+                    client.publishWith()
+                            .topic(topicName)
+                            .qos(MqttQos.AT_LEAST_ONCE)
+                            .payload(payloadBytes)
+                            .send();
+                    client.disconnect();
                 }
             }
 
@@ -74,6 +114,23 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
             public void onFinish() {
             }
         }.start();
+    }
+
+    private void displayValue(float luxValue) {
+        TextView valueTextView = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        valueTextView.setLayoutParams(params);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String currentTime = sdf.format(new Date());
+
+        valueTextView.setText(String.format(Locale.getDefault(), "%s: %.2f Lux", currentTime, luxValue));
+
+        valueContainer.addView(valueTextView);
     }
 
     @Override
@@ -100,12 +157,13 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         checkThresholds(lightValue);
     }
 
-    private void checkThresholds(float luxValue) {
+    private void checkThresholds(float luxValue)
+    {
         if (luxValue > UPPER_THRESHOLD) {
-            displayWarning("High Light Warning");
+            displayWarning("High Light Warning! Light Lux: " + lightValue);
             sendNotification(NOTIFICATION_ID_HIGH, "High Light Warning", "The light level is too high!");
         } else if (luxValue < LOWER_THRESHOLD) {
-            displayWarning("Low Light Warning");
+            displayWarning("Low Light Warning! Light Lux: "+ lightValue);
             sendNotification(NOTIFICATION_ID_LOW, "Low Light Warning", "The light level is too low!");
         } else {
             lightValueTextView.setTextColor(Color.WHITE);

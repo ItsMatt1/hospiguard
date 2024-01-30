@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
-    tools:context=".LightSensorFragment">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/lightValueTextView"
@@ -15,5 +14,14 @@
         android:textSize="18sp"
         android:text="Luminosidade Lux: 0"
         android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:id="@+id/valueContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp">
+        <!-- Dynamic TextViews for lux values will be added here programmatically -->
+    </LinearLayout>
 
 </LinearLayout>
