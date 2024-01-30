@@ -41,12 +41,23 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
 
     private LinearLayout valueContainer;
 
+    public float UPPER_THRESHOLD = 60;
+
+    public float LOWER_THRESHOLD = 5;
+
     public static final String EXTRA_MESSAGE = "com.example.basicandroidmqttclient.MESSAGE";
     public static final String brokerURI = "34.194.22.234";
 
     float lightValue = 0;
 
     String topicName = "doctorLightSensorA";
+
+    private static final String CHANNEL_ID = "light_sensor_channel";
+    private static final int NOTIFICATION_ID_HIGH = 1;
+    private static final int NOTIFICATION_ID_LOW = 2;
+
+    private static final int PERMISSION_REQUEST_NOTIFICATION = 123; // Choose any unique value
+    private static final int NOTIFICATION_ID = 456; // Choose any unique value
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +68,8 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
         lightValueTextView = findViewById(R.id.lightValueTextView);
 
         connectToMQTTBroker();
+
+        createNotificationChannel();
     }
 
     private void connectToMQTTBroker() {
@@ -93,5 +106,61 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
     private void updateLightValue(float newLightValue) {
         lightValue = newLightValue;
         lightValueTextView.setText("Light Lux: " + lightValue);
+
+        // Call checkThresholds to monitor light levels and show warnings/notifications
+        checkThresholds(newLightValue);
+    }
+
+    private void checkThresholds(float luxValue)
+    {
+        if (luxValue > UPPER_THRESHOLD) {
+            displayWarning("High Light Warning! Light Lux: " + lightValue);
+            sendNotification(NOTIFICATION_ID_HIGH, "High Light Warning", "The light level is too high!");
+        } else if (luxValue < LOWER_THRESHOLD) {
+            displayWarning("Low Light Warning! Light Lux: "+ lightValue);
+            sendNotification(NOTIFICATION_ID_LOW, "Low Light Warning", "The light level is too low!");
+        } else {
+            lightValueTextView.setTextColor(Color.WHITE);
+            lightValueTextView.setText("Light Lux: " + lightValue);
+        }
+    }
+
+    private void displayWarning(String warningMessage) {
+        lightValueTextView.setTextColor(Color.RED);
+        lightValueTextView.setText(warningMessage);
+    }
+
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Light Sensor Channel";
+            String description = "Channel for Light Sensor Notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void sendNotification(int notificationId, String title, String message) {
+        Log.d("Notification", "Sending notification with ID: " + notificationId);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("Notification", "Permission not granted for notifications. Requesting permission...");
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_NOTIFICATION);
+            return;
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_2645897)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(notificationId, builder.build());
+
+        Log.d("Notification", "Notification sent successfully.");
     }
 }

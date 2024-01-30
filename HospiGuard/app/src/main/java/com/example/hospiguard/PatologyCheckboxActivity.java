@@ -23,6 +23,8 @@ public class PatologyCheckboxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patology_checkbox);
 
+        patology = new ArrayList<>();
+
         save = findViewById(R.id.btn_save);
         checkbox1 = findViewById(R.id.checkbox1);
         checkbox2 = findViewById(R.id.checkbox2);
@@ -42,8 +44,9 @@ public class PatologyCheckboxActivity extends AppCompatActivity {
                         patology.add(checkbox.getText().toString());
                     }
                 }
-            Intent telaSensores = new Intent( PatologyCheckboxActivity.this, SensorSelectActivity.class);
-            startActivity(telaSensores);
+                Intent telaSensores = new Intent( PatologyCheckboxActivity.this, SensorSelectActivity.class);
+                telaSensores.putStringArrayListExtra("selected_patologies", patology);
+                startActivity(telaSensores);
             }
         });
     }

@@ -22,12 +22,18 @@ public class SensorSelectActivity extends AppCompatActivity {
         Button temperatureButton = findViewById(R.id.temperatureButton);
         Button heartRateButton = findViewById(R.id.heartRateButton);
 
+        // Retrieve the passed data
+        Intent intent = getIntent();
+        ArrayList<String> selectedPatologies = intent.getStringArrayListExtra("selected_patologies");
+
         // Set click listeners for each button
         luminosityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Launch LuminositySensorActivity
                 Intent intent = new Intent(SensorSelectActivity.this, LightSensorActivity.class);
+                // Pass the selected patologies to LightSensorActivity
+                intent.putStringArrayListExtra("selected_patologies", selectedPatologies);
                 startActivity(intent);
             }
         });

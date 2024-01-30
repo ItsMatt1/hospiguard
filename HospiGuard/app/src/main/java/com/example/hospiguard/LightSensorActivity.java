@@ -2,6 +2,7 @@ package com.example.hospiguard;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -31,6 +32,7 @@ import android.hardware.SensorManager;
 
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
@@ -46,11 +48,11 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
     private LinearLayout valueContainer;
 
     public static final String EXTRA_MESSAGE = "com.example.basicandroidmqttclient.MESSAGE";
-    public static final String brokerURI = "ec2-34-194-22-234.compute-1.amazonaws.com";
+    public static final String brokerURI = "34.194.22.234";
 
     float lightValue = 0;
-    private static final float UPPER_THRESHOLD = 60;
-    private static final float LOWER_THRESHOLD = 5;
+    private float UPPER_THRESHOLD = 60;
+    private final float LOWER_THRESHOLD = 5;
 
     private static final String CHANNEL_ID = "light_sensor_channel";
     private static final int NOTIFICATION_ID_HIGH = 1;
@@ -73,6 +75,22 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         }
 
         valueContainer = findViewById(R.id.valueContainer);
+
+        // Retrieve the passed data
+        Intent intent = getIntent();
+        ArrayList<String> selectedPatologies = intent.getStringArrayListExtra("selected_patologies");
+
+        Log.d("Loog", String.valueOf(selectedPatologies));
+
+        // Check if "Fotofobia" is in the selectedPatologies ArrayList
+        boolean isFotofobiaSelected = selectedPatologies != null && selectedPatologies.contains("Fotofobia");
+
+        Log.d("Loog", String.valueOf(isFotofobiaSelected));
+
+        if (isFotofobiaSelected)
+        {
+            UPPER_THRESHOLD = 40.0f;
+        }
 
         createNotificationChannel();
         initializeViews();
