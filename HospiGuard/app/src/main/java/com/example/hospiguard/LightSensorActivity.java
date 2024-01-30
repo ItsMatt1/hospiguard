@@ -107,6 +107,9 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
                             .payload(payloadBytes)
                             .send();
                     client.disconnect();
+
+
+
                 }
             }
 

@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.view.WindowCompat;
@@ -18,11 +19,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.hospiguard.databinding.ActivityMainBinding;
+import com.hivemq.client.mqtt.datatypes.MqttQos;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private TextView user, password;
@@ -38,6 +44,22 @@ public class MainActivity extends AppCompatActivity {
         user = findViewById(R.id.edit_text_login);
         password = findViewById(R.id.edit_text_password);
         login = findViewById(R.id.btn_sign_in);
+
+        Mqtt5BlockingClient client = Mqtt5Client.builder()
+                .identifier(UUID.randomUUID().toString())
+                .serverHost("ec2-34-194-22-234.compute-1.amazonaws.com")
+                .buildBlocking();
+
+        client.connect();
+
+        // Use a callback lambda function to show the message on the screen
+        client.toAsync().subscribeWith()
+                .topicFilter("doctorLightSensor")
+                .qos(MqttQos.AT_LEAST_ONCE)
+                .callback(msg -> {
+                    Log.d("testeee", msg.toString());
+                })
+                .send();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
