@@ -42,11 +42,11 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
     private LinearLayout valueContainer;
 
     public static final String EXTRA_MESSAGE = "com.example.basicandroidmqttclient.MESSAGE";
-    public static final String brokerURI = "ec2-34-194-22-234.compute-1.amazonaws.com";
+    public static final String brokerURI = "34.194.22.234";
 
     float lightValue = 0;
 
-    String topicName = "lightSensor";
+    String topicName = "doctorLightSensorA";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class DoctorLightSensorActivity extends AppCompatActivity {
                         .callback(msg -> {
                             try {
                                 // Parse the payload as a float
-                                float newLightValue = Float.parseFloat(new String(msg.getPayloadAsBytes()));
+                                float newLightValue = ByteBuffer.wrap(msg.getPayloadAsBytes()).getFloat();
                                 Log.d("valordluz", String.valueOf(newLightValue));
                                 runOnUiThread(() -> updateLightValue(newLightValue));
                             } catch (NumberFormatException e) {
